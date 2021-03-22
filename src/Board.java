@@ -2,6 +2,12 @@ import java.util.Random;
 
 public class Board {
     private char[][] board = generateBoard();
+    boolean sunkCarrier = false;
+    boolean sunkBattleship = false;
+    boolean sunkDestroyer = false;
+    boolean sunkSubmarine = false;
+    boolean sunkPatrolBoat = false;
+
 
     public Board() {}
 
@@ -16,9 +22,9 @@ public class Board {
     }
 
     public void shoot(int x, char yLetter) {
-         int y = "ABCDEFGHIJ".indexOf(yLetter);
+        int y = "ABCDEFGHIJ".indexOf(yLetter);
 
-        if (board[y][x] == 'S') {
+        if ("12345".indexOf(board[y][x]) != -1) {
             board[y][x] = 'x';
         } else if (board[y][x] == 'W'){
             board[y][x] = 'o';
@@ -30,7 +36,7 @@ public class Board {
         loop:
         for (char[] row : board) {
             for (char space : row) {
-                if (space == 'S') {
+                if (space == '1' || space == '2' || space == '3' || space == '4' || space == '5') {
                     win = false;
                     break loop;
                 }
@@ -58,6 +64,43 @@ public class Board {
         return formatted;
     }
 
+    public String checkIfSunk() {
+        sunkCarrier = true;
+        sunkBattleship = true;
+        sunkDestroyer = true;
+        sunkSubmarine = true;
+        sunkPatrolBoat = true;
+        for (char[] row : board) {
+            for (char space : row) {
+                switch(space) {
+                    case '1':
+                        sunkSubmarine = false;
+                        break;
+                    case '2':
+                        sunkPatrolBoat = false;
+                        break;
+                    case '3':
+                        sunkDestroyer = false;
+                        break;
+                    case '4':
+                        sunkBattleship = false;
+                        break;
+                    case '5':
+                        sunkCarrier = false;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        if (sunkCarrier)  return "Carrier";
+        if (sunkBattleship)  return "Battleship";
+        if (sunkDestroyer)  return "Destroyer";
+        if (sunkSubmarine)  return "Submarine";
+        if (sunkPatrolBoat)  return "Patrol Boat";
+        return "";
+    }
+
 
     private char[][] generateBoard() {
         Random rand = new Random();
@@ -74,17 +117,17 @@ public class Board {
             if (rand.nextBoolean()) {
                 int y = rand.nextInt(11-shipSize);
                 int x = rand.nextInt(10);
-    
+
                 boolean isClear = true;
                 for (int i = y; i < y + shipSize; i++) {
-                    if (newBoard[i][x] == 'S') {
-                        isClear = false;
-                        break;
+                    if ("12345".indexOf(newBoard[i][x]) != -1) {
+                      isClear = false;
+                      break;
                     }
                 }
                 if (isClear) {
                     for (int i = y; i < y + shipSize; i++) {
-                        newBoard[i][x] = 'S';
+                        newBoard[i][x] = Character.forDigit(j, 10);
                     }
                 } else {
                     j++;
@@ -95,14 +138,14 @@ public class Board {
 
                 boolean isClear = true;
                 for (int i = x; i < x + shipSize; i++) {
-                    if (newBoard[y][i] == 'S') {
-                        isClear = false;
-                        break;
+                    if ("12345".indexOf(newBoard[y][i]) != -1) {
+                      isClear = false;
+                      break;
                     }
                 }
                 if (isClear) {
                     for (int i = x; i < x + shipSize; i++) {
-                        newBoard[y][i] = 'S';
+                        newBoard[y][i] = Character.forDigit(j, 10);
                     }
                 } else {
                     j++;
