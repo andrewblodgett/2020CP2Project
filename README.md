@@ -4,4 +4,4 @@ The classic paper-and-pen battleship, now playable in the console. Compete again
 
 
 ## Class Diagram
-![Class Diagram](Class Diagram Battleship.png)
+![Class Diagram](class_diagram.png)
