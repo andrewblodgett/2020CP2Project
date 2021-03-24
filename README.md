@@ -1,6 +1,7 @@
 # Battleship
 ## Project Description
-I plan on making a battleship game, where you shoot at your opponent to sink their ships. There will be lots more to it though, of course.
+The classic paper-and-pen battleship, now playable in the console. Compete against the computer to get the best score. 
+
 
 ## Class Diagram
-![Class Diagram](ClassDiagramBattleship.png)
+![Class Diagram](Class Diagram Battleship.png)
